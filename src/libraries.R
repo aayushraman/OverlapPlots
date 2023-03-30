@@ -16,7 +16,8 @@ mypar()
 ## functions
 source("DESeqCalculation.R")
 source("gabel.function.R")
+source("logofMeans.R")
 source("overlay.gabel.function.R")
 source("overlap_wrappers.R")
 source("plot2plots.R")
-source("logofMeans.R")
+

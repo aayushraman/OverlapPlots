@@ -2,7 +2,8 @@
 boxPlot <- function(data, samples){
   par(mar=c(2+round(max(nchar(colnames(data)))/2),4,2,1),font=2)
   boxplot(data, boxwex=0.6, notch=T, outline=FALSE, las=2, col=samples)
-  legend("topleft", levels(samples), fill = palette(), bty="n", cex = 0.8, xpd = TRUE)
+  legend("topleft", levels(samples), fill = palette(), bty="n", cex = 0.8, 
+         xpd = TRUE)
 }
 
 ## Gene Expression Level in Microarray data

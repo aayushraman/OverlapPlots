@@ -102,11 +102,12 @@ overlay.moving.average.function <- function(dat, bin.size, shift.size,
   cat("Total number of bins = ", dim(mean.points)[1],"\n")
   cat("Total number of Short Gene bins = ", sum(mean.points$mat.length < 100),"\n")
   cat("Total number of Long Gene bins = ", sum(mean.points$mat.length >= 100),"\n")
-  cat("Total number of bins that are statistically significant = ", sum(mean.points$gene.type == 1),"\n")
-  cat("Total number of Short Gene bins that are statistically significant = ",sum(mean.points$gene.type == 1 & 
-                                                                                      mean.points$mat.length < 100),"\n")
-  cat("Total number of Long Gene bins that are statistically significant = ",sum(mean.points$gene.type == 1 & 
-                                                                                     mean.points$mat.length >= 100),"\n")
+  cat("Total number of bins that are statistically significant = ", 
+      sum(mean.points$gene.type == 1),"\n")
+  cat("Total number of Short Gene bins that are statistically significant = ",
+      sum(mean.points$gene.type == 1 & mean.points$mat.length < 100),"\n")
+  cat("Total number of Long Gene bins that are statistically significant = ",
+      sum(mean.points$gene.type == 1 & mean.points$mat.length >= 100),"\n")
   if(sum(mean.points$fdr < 0.05) > 0){
     y.int <- min(mean.points[which(mean.points$fdr < 0.05 & 
                                   !is.infinite(mean.points$fdr)), "pval.log10"])
@@ -115,13 +116,16 @@ overlay.moving.average.function <- function(dat, bin.size, shift.size,
                     geom_point(size = 2, color = gene.type) + 
                     geom_hline(aes(yintercept = y.int), 
                                colour="#FF0000", linetype="dashed", size = 1) + 
-                    scale_x_continuous(trans = log10_trans(), breaks = c(0,1,10,100,1000)) +
+                    scale_x_continuous(trans = log10_trans(), 
+                                       breaks = c(0,1,10,100,1000)) +
                     xlab(paste("Mean Gene Length in KB")) + 
                     ylab(paste("-Log10(pvalue)")) + theme_bw() +
                     theme(legend.position="none", 
                           axis.title = element_text(size = 24, face = "bold"),
-                          axis.text.x = element_text(size = 24, face = "bold", color = "black"),
-                          axis.text.y = element_text(size = 24, face = "bold", color = "black"))
+                          axis.text.x = element_text(size = 24, face = "bold", 
+                                                     color = "black"),
+                          axis.text.y = element_text(size = 24, face = "bold", 
+                                                     color = "black"))
   }else{
     y.int <- ceiling(max(mean.points[,"pval.log10"]))
     plot2 <- ggplot(data = mean.points, aes(x = mat.length, y = pval.log10)) + 

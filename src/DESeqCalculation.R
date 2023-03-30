@@ -19,7 +19,6 @@ DESeqCalculation <- function(dat, genotypes, fc = 1.15){
                   plot.margin = unit(c(0.25,0.25,0.25,0.25), "cm"), legend.position = c(.9, .1),
                   legend.title = element_blank(), 
                   legend.text = element_text(size = 14, face = "bold", color = "black"))
-  print(p1)
   
   ## plots
   boxPlot(data = log2(dat+1), samples = factor(genotypes))
@@ -69,7 +68,6 @@ DESeqCalculation <- function(dat, genotypes, fc = 1.15){
   
   ## Sorted as per adj. P-value
   resSort <- res.dds[order(res.dds$padj),]
-  print(head(resSort))
   topGenes <- resSort[1:20,]
   topGenes$genes <- rownames(topGenes)
   
