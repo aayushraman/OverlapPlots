@@ -10,15 +10,15 @@ Recent studies have suggested that genes longer than 100 kb are more likely to b
 
 **1. Overlap plot for KO/WT whole cell dataset**
 
-![](dat/ex_overlap_plots/KO-WT_whole-cell.png =300x258)
+<img src='dat/ex_overlap_plots/KO-WT_whole-cell.png' width='300'>
 
 **2. Overlap plot for KO/WT nuclear dataset**
 
-![](dat/ex_overlap_plots/KO-WT_nuclear.png =300x258)
+<img src='dat/ex_overlap_plots/KO-WT_nuclear.png' width='300'>
 
 **3. Overlap plot for KO/WT chromatin dataset**
 
-![](dat/ex_overlap_plots/KO-WT_chromatin.png =300x258)
+<img src='dat/ex_overlap_plots/KO-WT_chromatin.png' width='300'>
 
 ## References:
 
