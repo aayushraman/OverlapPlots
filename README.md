@@ -13,7 +13,7 @@ We have included functions for generating two groups of WT clusters to assess WT
 1. original *k*-means
 2. variation of *k*-means function to generate clusters of equal sizes since the original will not always outputs clusters of equal sizes.
 
-## Some examples of Overlap Plots for Boxer et al. (2020) dataset (PMID: 31784358)
+## Some examples of Overlap Plots for Boxer et al., *Molecular Cell* (2020) dataset
 
 **1. Overlap plot for KO/WT whole cell dataset**
 
@@ -27,7 +27,7 @@ We have included functions for generating two groups of WT clusters to assess WT
 
 <img src='dat/ex_overlap_plots/KO-WT_chromatin.png' width='300'>
 
-## References:
+## References
 
 1.  **AT Raman**†, AE Pohodich†, YW Wan, HK Yalamanchili, HY Zoghbi, Z Liu. Apparent bias towards long gene misregulation in MeCP2 syndromes disappears after controlling for baseline variations. [*Nature Communications* (2018)](https://www.nature.com/articles/s41467-018-05627-1) (PMID: 30104565)
 
