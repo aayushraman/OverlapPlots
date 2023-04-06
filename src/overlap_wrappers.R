@@ -33,12 +33,38 @@ overlap_wrapper <- function(dat, refseq, KO.idx, WT.idx, WT1.idx, WT2.idx,
     return(list(res = res, plot = res.plot, log2FC.length = log2FC.length))
 }
 
-## kmeans
+## original k-means
 WTgrp_kmeans <- function(control_mat, centers = 2, iter.max = 1000){
-    group <- kmeans(t(control_mat), centers = 2, iter.max = 1000, 
-                    trace = FALSE)$cluster
+    group <- kmeans(t(control_mat), centers, iter.max)$cluster
     idx1 <- which(group %in% 1)
     idx2 <- which(group %in% 2)
+    return(list(WT.idx1 = idx1, WT.idx2 = idx2))
+}
+
+## k-means variation for equal cluster size 
+## tutorial: https://elki-project.github.io/tutorial/same-size_k_means
+## points are ordered by their distance to the closest center minus the distance
+## to the farthest cluster. Each point is assigned to the best cluster in order.
+WTgrp_kmeans_eqSize <- function(control_mat, centers = 2, iter.max = 1000){
+    size <- ceiling(nrow(t(control_mat))/centers)
+    group <- kmeans(t(control_mat), centers, iter.max)
+    new_group <- rep(NA, nrow(t(control_mat)))
+    new_centers <- lapply(1:centers, function(r){
+        euc_dist <- control_mat - group$centers[r,]
+        sqrt(apply(euc_dist, 2, function(x) sum(x^2)))})
+    new_centers <- matrix(unlist(new_centers), ncol = centers)
+    new_clust_size <- rep(0, centers)
+    sample_ord <- order(apply(new_centers, 1, min) - apply(new_centers, 1, max))
+    for(i in sample_ord){
+        bestcl <- which.max(new_centers[i,])
+        new_group[i] <- bestcl
+        new_clust_size[bestcl] <- new_clust_size[bestcl] + 1
+        if(new_clust_size[bestcl] >= size){
+            new_centers[,bestcl] <- NA
+        }
+    }
+    idx1 <- which(new_group %in% 1)
+    idx2 <- which(new_group %in% 2)
     return(list(WT.idx1 = idx1, WT.idx2 = idx2))
 }
 

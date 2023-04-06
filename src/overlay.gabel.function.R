@@ -79,8 +79,10 @@ overlay.moving.average.function <- function(dat, bin.size, shift.size,
   # ind <- mean.points$mat.length >=1 & mean.points$mat.length <=1000
   # mean.points = mean.points[ind, ]
   plot1 <- ggplot(data = mean.points, aes(x = mat.length)) + 
-              geom_line(aes(y = mean.points$mat.mean1, color = col1), size=1) + 
-              geom_line(aes(y = mean.points$mat.mean2, color = col2), size=1) + 
+              geom_line(aes(y = mean.points$mat.mean1, color = col1), 
+                        linewidth = 1) + 
+              geom_line(aes(y = mean.points$mat.mean2, color = col2), 
+                        linewidth = 1) + 
               ylab(paste("Mean Log2FC")) + theme_bw() +
               scale_x_continuous(trans = log10_trans(), breaks = c(0,1,10,100,1000)) +
               geom_ribbon(aes(ymin=(mat.mean1-(mat.sd.1*0.50)), 
@@ -112,7 +114,7 @@ overlay.moving.average.function <- function(dat, bin.size, shift.size,
     y.int <- min(mean.points[which(mean.points$fdr < 0.05 & 
                                   !is.infinite(mean.points$fdr)), "pval.log10"])
     plot2 <- ggplot(data = mean.points, aes(x = mat.length, y = pval.log10)) + 
-                    geom_line(size = 0.4, colour="gray70") + 
+                    geom_line(linewidth = 0.4, colour = "gray70") + 
                     geom_point(size = 2, color = gene.type) + 
                     geom_hline(aes(yintercept = y.int), 
                                colour="#FF0000", linetype="dashed", size = 1) + 
@@ -129,7 +131,7 @@ overlay.moving.average.function <- function(dat, bin.size, shift.size,
   }else{
     y.int <- ceiling(max(mean.points[,"pval.log10"]))
     plot2 <- ggplot(data = mean.points, aes(x = mat.length, y = pval.log10)) + 
-                    geom_line(size = 0.4, colour="gray70") + 
+                    geom_line(linewidth = 0.4, colour = "gray70") + 
                     geom_point(size = 2, color = gene.type) + 
                     scale_x_continuous(trans = log10_trans(), breaks = c(0,1,10,100,1000)) +
                     xlab(paste("Mean Gene Length in KB")) + ylab(paste("-Log10(pvalue)")) + 

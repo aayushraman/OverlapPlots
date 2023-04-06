@@ -1,7 +1,9 @@
 ## DESeq Run
 DESeqCalculation <- function(dat, genotypes, fc = 1.15){
-  colData <- data.frame(samples = colnames(dat), genotypes = factor(genotypes), row.names = colnames(dat))
-  dds <- DESeqDataSetFromMatrix(countData = dat, colData = colData, design = ~ genotypes)
+  colData <- data.frame(samples = colnames(dat), genotypes = factor(genotypes), 
+                        row.names = colnames(dat))
+  dds <- DESeqDataSetFromMatrix(countData = dat, colData = colData, 
+                                design = ~ genotypes)
   dds <- estimateSizeFactors(dds)
   dat <- counts(dds, normalized=TRUE)
   print(dim(dat))
