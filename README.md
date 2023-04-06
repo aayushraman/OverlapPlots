@@ -1,7 +1,5 @@
 # README
 
-<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" style="border-width:0"/></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
-
 ## Why use Overlap plots?
 
 Recent studies have suggested that genes longer than 100 kb are more likely to be misregulated in neurological diseases associated with synaptic dysfunction, such as autism and Rett syndrome (Gabel et al. 2015, Boxer et al. 2020). These length-dependent transcriptional changes are modest in MeCP2-mutant samples, but, given the low sensitivity of high-throughput transcriptome profiling technology, here we re-evaluate the statistical significance of these results. We find that the apparent length-dependent trends previously observed in MeCP2 microarray and RNA-sequencing datasets disappear after estimating baseline variability from randomized control samples. Overlap plots helps compare the KO/WT and WT/WT variations.
@@ -42,3 +40,5 @@ Please add issues if you have any questions/comments regarding the "overlap plot
 1.  Ayush T Raman [original author]
 2.  Daniel Palacios [currently working on the bioconductor package]
 3.  Zhandong Liu [supervised the work]
+
+<a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/88x31.png" alt="Creative Commons License" style="border-width:0"/></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.
