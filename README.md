@@ -13,7 +13,7 @@ We have included functions for generating two groups of WT clusters to assess WT
 1. original *k*-means
 2. variation of *k*-means function to generate clusters of equal sizes since the original will not always outputs clusters of equal sizes.
 
-## Some examples of Overlap Plots for Boxer et al., *Molecular Cell* (2020) dataset
+## Some examples of Overlap Plots for Boxer et al., *Molecular Cell* 2020 dataset
 
 **1. Overlap plot for KO/WT whole cell dataset**
 
