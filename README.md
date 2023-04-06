@@ -4,9 +4,16 @@
 
 ## Why use Overlap plots?
 
-Recent studies have suggested that genes longer than 100 kb are more likely to be misregulated in neurological diseases associated with synaptic dysfunction, such as autism and Rett syndrome (Gabel et al 2015, Boxer et al 2020). These length-dependent transcriptional changes are modest in MeCP2-mutant samples, but, given the low sensitivity of high-throughput transcriptome profiling technology, here we re-evaluate the statistical significance of these results. We find that the apparent length-dependent trends previously observed in MeCP2 microarray and RNA-sequencing datasets disappear after estimating baseline variability from randomized control samples. Overlap plots helps compare the KO/WT and WT/WT variations.
+Recent studies have suggested that genes longer than 100 kb are more likely to be misregulated in neurological diseases associated with synaptic dysfunction, such as autism and Rett syndrome (Gabel et al. 2015, Boxer et al. 2020). These length-dependent transcriptional changes are modest in MeCP2-mutant samples, but, given the low sensitivity of high-throughput transcriptome profiling technology, here we re-evaluate the statistical significance of these results. We find that the apparent length-dependent trends previously observed in MeCP2 microarray and RNA-sequencing datasets disappear after estimating baseline variability from randomized control samples. Overlap plots helps compare the KO/WT and WT/WT variations.
 
-## Some examples of Overlap Plots for Boxer et al. (2020) dataset
+## What are the changes from the previous version of the OverlapPlot (Raman et al., *Nature Comm* 2018)?
+
+We have included functions for generating two groups of WT clusters to assess WT/WT variation. These are: 
+
+1. original *k*-means
+2. variation of *k*-means function to generate clusters of equal sizes since the original will not always outputs clusters of equal sizes.
+
+## Some examples of Overlap Plots for Boxer et al. (2020) dataset (PMID: 31784358)
 
 **1. Overlap plot for KO/WT whole cell dataset**
 
@@ -28,10 +35,10 @@ Recent studies have suggested that genes longer than 100 kb are more likely to b
 
 ## Inquiries
 
-Please add issues if you have any questions/comments regarding the "overlap plots" or please contact directly at [aayushraman09\@gmail.com](mailto:aayushraman09@gmail.com){.email}.
+Please add issues if you have any questions/comments regarding the "overlap plots" or please contact directly at [aayushraman09\@gmail.com](mailto:aayushraman09@gmail.com).
 
 ## Contributors
 
-1.  Ayush T Raman [original authors]
+1.  Ayush T Raman [original author]
 2.  Daniel Palacios [currently working on the bioconductor package]
-3.  Zhandong Liu [Supervised the work]
+3.  Zhandong Liu [supervised the work]
