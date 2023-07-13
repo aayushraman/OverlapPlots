@@ -94,6 +94,12 @@ finalRun <- function(count.file, genotypes, degs.file, bin.size, shift.size,
 load(file = "../dat-info/mm10_ncbi-refSeqGene_Dec2019.RData")
 genotypes <- factor(c(rep("WT", 10), rep("KO", 10)), levels = c("KO", "WT"))
 
+#######################################################
+#
+## overlap plots -- mean(log2FC) vs mean(gene length)
+#
+#######################################################
+ 
 ## KO/WT whole cell dataset (ref: Fig 1D Boxer et al. Mol Cell 2020)
 count.file <- "../dat/counts/GSE128178_10WT_10MeCP2_KO_whole_cell_RNAseq_exon_counts.txt"
 degs.file <- "../dat/DEGs/KO-WT_whole-cell_RNA-seq.txt"
@@ -141,6 +147,61 @@ bin.size <- 40
 shift.size <- 4
 chromatin.R306C <- finalRun(count.file, genotypes, degs.file, bin.size, 
                             shift.size, title = "R306C/WT chromatin dataset")
+# rm(wholeCell.KO, nuclear.KO, chromatin.KO, wholeCell.R306C, nuclear.R306C, 
+#    chromatin.R306C)
+
+#######################################################
+#
+## overlap plots -- mean(log2FC) vs mean(mCA)
+#
+#######################################################
+
+## load the workspace
+load(file = "../dat-info/mm10_ncbi-refSeqGene_Dec2019.RData")
+mCA <- data.frame(readRDS("../dat/mCA/CAperGene_10wk_boxer.RDS"), stringsAsFactors = F)
+mCA <- mCA[mCA$CA >= 5,]
+mCA <- mCA[mCA$gene.length >= 4500,]
+mCA$mCA.CA <- mCA$mCA/mCA$CA
+mCA1 <- mCA[,c(1,6,7)]
+
+## mCA analysis for KO/WT in whole cell dataset
+degs.dat <- read.table("../dat/DEGs/KO-WT_whole-cell_RNA-seq.txt", sep = "\t", 
+                       stringsAsFactors = F, header = TRUE, row.names = 1)
+mat <- wholeCell.KO$res$results[,c(8:27,1,3)]
+colnames(mat)[21] <- "gene.name"
+grp.idx <- WTgrp_kmeans(control_mat = mat[,1:10])
+if(length(grp.idx$WT.idx1) != length(grp.idx$WT.idx2)){
+    message("Cluster size is not equal, therefore run same size k-means 
+                variation!")
+    grp.idx <- WTgrp_kmeans_eqSize(control_mat = mat[,1:10])
+}
+res1 <- overlap_degs_mCA_wrapper(degs.dat = degs.dat, count.dat = mat,
+                                 refseq = mCA1, WT1.idx = grp.idx$WT.idx1, 
+                                 WT2.idx = grp.idx$WT.idx2, bin.size = 60, 
+                                 shift.size = 6, methyl.type = "mCA/CA")
+p1 <- (res1$plot1 + coord_cartesian(ylim = c(-0.25,0.25))) / res1$plot2 / res1$plot4
+rm(wholeCell.KO, degs.dat, mat)
+
+## mCA analysis for R306C/WT
+degs.dat <- read.table("../dat/DEGs/R306C-WT_whole-cell_RNA-seq.txt", 
+                       sep = "\t", stringsAsFactors = F, header = TRUE, 
+                       row.names = 1)
+mat <- wholeCell.R306C$res$results[,c(8:27,1,3)]
+colnames(mat)[21] <- "gene.name"
+grp.idx <- WTgrp_kmeans(control_mat = mat[,1:10])
+if(length(grp.idx$WT.idx1) != length(grp.idx$WT.idx2)){
+    message("Cluster size is not equal, therefore run same size k-means 
+                variation!")
+    grp.idx <- WTgrp_kmeans_eqSize(control_mat = mat[,1:10])
+}
+res2 <- overlap_degs_mCA_wrapper(degs.dat, count.dat = mat, refseq = mCA1, 
+                                 WT1.idx = grp.idx$WT.idx1, 
+                                 WT2.idx = grp.idx$WT.idx2, bin.size = 40, 
+                                 shift.size = 4, methyl.type = "mCA/CA")
+p2 <- (res2$plot1 + coord_cartesian(ylim = c(-0.25,0.25))) / res2$plot2 / res2$plot4
+rm(wholeCell.R306C, degs.dat)
+
+
 
 
 

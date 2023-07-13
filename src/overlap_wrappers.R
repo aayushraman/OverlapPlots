@@ -70,6 +70,34 @@ WTgrp_kmeans_eqSize <- function(control_mat, centers = 2, iter.max = 1000){
     return(list(WT.idx1 = idx1, WT.idx2 = idx2))
 }
 
+overlap_degs_mCA_wrapper <- function(degs.dat, count.dat, refseq, WT1.idx, 
+                                     WT2.idx, bin.size, shift.size, methyl.type, 
+                                     degs = TRUE){
+    if(degs == TRUE){
+        degs.dat <- degs.dat[degs.dat$FDR < 0.05,]
+    }
+    cat("Number of genes =",dim(degs.dat)[1],"\n\n")
+    degs.dat <- inner_join(degs.dat %>% rownames_to_column(var = "gene.name"), 
+                           refseq, #%>% rownames_to_column(var = "gene.name"), 
+                           by = "gene.name")
+    ## overlap plot
+    cat("Control Group 1:",WT1.idx,"\n")
+    cat("Control Group 2:",WT2.idx,"\n")
+    log2FC.WT <- data.frame(count.dat[,c(1:10, 21)], stringsAsFactors = F)
+    log2FC.WT$comp.mat <- apply(count.dat[,c(WT1.idx, WT2.idx)], 1, 
+                    function(r){log2((mean(r[1:length(WT1.idx)])+1) / 
+                                         (mean(r[(length(WT1.idx)+1):10])+1))})
+    log2FC.length <- inner_join(x = log2FC.WT[,c("gene.name","comp.mat")],
+                                y = degs.dat[,c("gene.name","logFC", 
+                                                "gene.length","mCA.CA")], 
+                                by = "gene.name")
+    message(dim(log2FC.length)[1])
+    res <- overlay.mC(mat = log2FC.length[,c(2:5,1)], comp.between1 = "(WT/WT)",
+                      comp.between2 = "(KO/WT)", bin.size = bin.size,
+                      shift.size = shift.size, methyl.type = methyl.type)
+    return(res = res)
+}
+
 ## for DEGs 
 # overlap_degs_wrapper <- function(degs.dat, count.dat, refseq,
 #                                  WT1.idx, WT2.idx,

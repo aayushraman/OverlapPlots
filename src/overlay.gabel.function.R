@@ -7,6 +7,7 @@ overlay.gabels.plot <- function(mat, bin.size = 200, shift.size = 40,
                                         comp.between1, comp.between2, conf_int)
   return(p1)
 }  
+
 overlay.moving.average.function <- function(dat, bin.size, shift.size, 
                                             comp.between1, comp.between2,
                                             conf_int){
