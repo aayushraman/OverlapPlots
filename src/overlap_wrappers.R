@@ -1,6 +1,7 @@
 ## wrapper around overlap plots
 overlap_wrapper <- function(dat, refseq, KO.idx, WT.idx, WT1.idx, WT2.idx, 
-                            bin.size, shift.size, shrink_lfc = F){
+                            bin.size, shift.size, conf_int = 0.50, 
+                            shrink_lfc = F){
     dat.annot <- inner_join(x = dat, y = refseq, by = "gene.name")
     cat("Control Group 1:",WT1.idx,"\n")
     cat("Control Group 2:",WT2.idx,"\n")
@@ -25,7 +26,8 @@ overlap_wrapper <- function(dat, refseq, KO.idx, WT.idx, WT1.idx, WT2.idx,
     }
     res <- overlay.gabels.plot(mat = log2FC.length[,c(2:4)], 
                                comp.between1 = "(WT/WT)", 
-                               comp.between2 = "(KO/WT)", bin.size, shift.size)
+                               comp.between2 = "(KO/WT)", 
+                               bin.size, shift.size, conf_int)
     plot.margin <- unit(c(1,0.5,0.5,0.5), "cm")
     res.plot <- plot_grid(res$plot1 + coord_cartesian(ylim = c(-0.4,0.4)),
                           res$plot2 + coord_cartesian(ylim = c(0,50)), ncol = 1, 

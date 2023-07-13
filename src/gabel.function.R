@@ -44,7 +44,8 @@ moving.average.function <- function(dat, bin.size, shift.size, length.type,
   ind = mean.points$mat.length >=1 & mean.points$mat.length <=1000
   mean.points = mean.points[ind, ]
   plot1 <- ggplot(data = mean.points, aes(x = mat.length, y = mat.mean)) + 
-            geom_point(size = 1.5, colour = col2) + geom_line(size=1, color = col1) + 
+            geom_point(size = 1.5, colour = col2) + 
+            geom_line(linewidth = 1, color = col1) + 
             scale_x_continuous(trans = log10_trans(), breaks = c(0,1,10,100,1000)) + 
             xlab(paste("Mean",length.type,"Length in KB")) + 
             ylab(paste(y.axis, comp.between)) + theme_bw() +

@@ -75,8 +75,8 @@ DESeqCalculation <- function(dat, genotypes, fc = 1.15){
   
   ## Histogram and MA Plot with top 10 genes
   par(mfrow=c(1,1))
-  hist(res.dds$pvalue[res.dds$baseMean > 1], breaks=0:20/20, col="grey50", border="white", 
-       main="Histogram of p-values with baseMean > 1")
+  hist(res.dds$pvalue[res.dds$baseMean > 1], breaks=0:20/20, col="grey50", 
+       border="white", main="Histogram of p-values with baseMean > 1")
   DESeq2::plotMA(resSort, main = "MA Plot")
   for(i in 1:nrow(topGenes)){
     with(topGenes[i, ],{
@@ -91,12 +91,17 @@ DESeqCalculation <- function(dat, genotypes, fc = 1.15){
   results$Significant <- ifelse(results$log2FoldChange > log2(fc) & results$padj < 0.05, "Up",
                                 ifelse(results$log2FoldChange < log2(1/fc) & results$padj < 0.05, "Down","Not Signif"))
   pval.sig <- max(results[which(results$padj < 0.05),"pvalue"])
-  p5 <- ggplot(results, aes(x = log2FoldChange, y = -log10(pvalue))) + geom_point(aes(color = Significant)) + 
-            scale_color_manual(values = c("green", "grey", "red")) +  theme_bw(base_size = 16) +
-            xlab("Log2 Fold Change") + ylab("-Log10 P-value") +
-            geom_hline(aes(yintercept = -log10(pval.sig)), color="dodgerblue", linetype="dashed") + 
-            geom_vline(aes(xintercept = log2(fc)), color="dodgerblue", linetype="dashed") +
-            geom_vline(aes(xintercept = log2(1/fc)), color="dodgerblue", linetype="dashed") +
+  p5 <- ggplot(results, aes(x = log2FoldChange, y = -log10(pvalue))) + 
+            geom_point(aes(color = Significant)) +  
+            scale_color_manual(values = c("green", "grey", "red")) +  
+            theme_bw(base_size = 16) + xlab("Log2 Fold Change") + 
+            ylab("-Log10 P-value") +
+            geom_hline(aes(yintercept = -log10(pval.sig)), color="dodgerblue", 
+                       linetype="dashed") + 
+            geom_vline(aes(xintercept = log2(fc)), color="dodgerblue", 
+                       linetype="dashed") +
+            geom_vline(aes(xintercept = log2(1/fc)), color="dodgerblue", 
+                       linetype="dashed") +
             theme(axis.title = element_text(size = 22, face = "bold"),
                   axis.text.x = element_text(size = 22, face = "bold", color = "black"),
                   axis.text.y = element_text(size = 22, face = "bold", color = "black"),
@@ -112,11 +117,13 @@ DESeqCalculation <- function(dat, genotypes, fc = 1.15){
   if(sum(levels(annot$genotypes) %in% c("WT", "MUT", "KO")) >= 2){
     annot$genotypes <- relevel(annot$genotypes, ref = "WT")
   }
-  p1.top <- pheatmap(mat, cluster_rows = TRUE, cluster_cols = TRUE, show_rownames = TRUE,
-                     show_colnames = TRUE, fontsize_row = 9, legend = TRUE, filename = NA, 
+  p1.top <- pheatmap(mat, cluster_rows = TRUE, cluster_cols = TRUE, 
+                     show_rownames = TRUE, show_colnames = TRUE, 
+                     fontsize_row = 9, legend = TRUE, filename = NA, 
                      fontsize_col = 10, scale = "row", #fontface="bold", 
                      clustering_distance_rows = "correlation", 
-                     clustering_distance_cols = "euclidean", annotation_col = annot)
+                     clustering_distance_cols = "euclidean", 
+                     annotation_col = annot)
   
   ## upregulated and downregulated genes
   ind.up <- which(results$log2FoldChange > log2(fc) & results$padj < 0.05)

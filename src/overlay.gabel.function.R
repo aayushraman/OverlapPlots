@@ -1,13 +1,15 @@
 ## overlay plot
 overlay.gabels.plot <- function(mat, bin.size = 200, shift.size = 40, 
-                                comp.between1 = "", comp.between2 = ""){
+                                comp.between1 = "", comp.between2 = "", 
+                                conf_int = 0.50){
   
   p1 <- overlay.moving.average.function(dat = mat, bin.size, shift.size, 
-                                        comp.between1, comp.between2)
+                                        comp.between1, comp.between2, conf_int)
   return(p1)
 }  
 overlay.moving.average.function <- function(dat, bin.size, shift.size, 
-                                            comp.between1, comp.between2){
+                                            comp.between1, comp.between2,
+                                            conf_int){
   dat <- dat[order(dat$gene.length),]
   dat$gene.length <- dat$gene.length/1000
   
@@ -85,11 +87,11 @@ overlay.moving.average.function <- function(dat, bin.size, shift.size,
                         linewidth = 1) + 
               ylab(paste("Mean Log2FC")) + theme_bw() +
               scale_x_continuous(trans = log10_trans(), breaks = c(0,1,10,100,1000)) +
-              geom_ribbon(aes(ymin=(mat.mean1-(mat.sd.1*0.50)), 
-                              ymax=(mat.mean1+(mat.sd.1*0.50)), 
+              geom_ribbon(aes(ymin=(mat.mean1-(mat.sd.1*conf_int)), 
+                              ymax=(mat.mean1+(mat.sd.1*conf_int)), 
                               x = mat.length, fill = col1), alpha=.25) +
-              geom_ribbon(aes(ymin=(mat.mean2-(mat.sd.2*0.50)), 
-                              ymax=(mat.mean2+(mat.sd.2*0.50)),
+              geom_ribbon(aes(ymin=(mat.mean2-(mat.sd.2*conf_int)), 
+                              ymax=(mat.mean2+(mat.sd.2*conf_int)),
                               x = mat.length, fill = col2), alpha=.25) +
               theme(## legend.text = element_text(size = 14, face = "bold"),
                     axis.title.y = element_text(size = 24, face = "bold", color = "black"),
@@ -116,8 +118,8 @@ overlay.moving.average.function <- function(dat, bin.size, shift.size,
     plot2 <- ggplot(data = mean.points, aes(x = mat.length, y = pval.log10)) + 
                     geom_line(linewidth = 0.4, colour = "gray70") + 
                     geom_point(size = 2, color = gene.type) + 
-                    geom_hline(aes(yintercept = y.int), 
-                               colour="#FF0000", linetype="dashed", size = 1) + 
+                    geom_hline(aes(yintercept = y.int), colour="#FF0000", 
+                               linetype="dashed", linewidth = 1) + 
                     scale_x_continuous(trans = log10_trans(), 
                                        breaks = c(0,1,10,100,1000)) +
                     xlab(paste("Mean Gene Length in KB")) + 
@@ -136,7 +138,7 @@ overlay.moving.average.function <- function(dat, bin.size, shift.size,
                     scale_x_continuous(trans = log10_trans(), breaks = c(0,1,10,100,1000)) +
                     xlab(paste("Mean Gene Length in KB")) + ylab(paste("-Log10(pvalue)")) + 
                     geom_hline(aes(yintercept = y.int), colour="#FF0000", 
-                                   linetype="dashed", size = 1) + theme_bw() +
+                                   linetype="dashed", linewidth = 1) + theme_bw() +
                     theme(axis.title = element_text(size = 24, face = "bold"),
                           axis.text.x = element_text(size = 24, face = "bold", color = "black"),
                           axis.text.y = element_text(size = 24, face = "bold", color = "black"),
