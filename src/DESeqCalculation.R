@@ -24,7 +24,7 @@ DESeqCalculation <- function(dat, genotypes, fc = 1.15){
   
   ## plots
   boxPlot(data = log2(dat+1), samples = factor(genotypes))
-  rld.dds <- assay(rlog(dds, blind=FALSE))
+  rld.dds <- assay(rlog(dds, blind = FALSE))
   p2 <- PCAplot(data = rld.dds, genotypes = colData$genotypes, conditions = colData$genotypes)
   p2 <- p2 + ggrepel::geom_text_repel(aes(label = colData$samples), size = 6, fontface = "bold", 
                                   color = "black", box.padding = unit(0.35, "lines"), 
@@ -103,10 +103,14 @@ DESeqCalculation <- function(dat, genotypes, fc = 1.15){
             geom_vline(aes(xintercept = log2(1/fc)), color="dodgerblue", 
                        linetype="dashed") +
             theme(axis.title = element_text(size = 22, face = "bold"),
-                  axis.text.x = element_text(size = 22, face = "bold", color = "black"),
-                  axis.text.y = element_text(size = 22, face = "bold", color = "black"),
-                  legend.title = element_text(size = 16, face = "bold", color = "black"),
-                  legend.text = element_text(size = 16, face = "bold", color = "black"),
+                  axis.text.x = element_text(size = 22, face = "bold", 
+                                             color = "black"),
+                  axis.text.y = element_text(size = 22, face = "bold", 
+                                             color = "black"),
+                  legend.title = element_text(size = 16, face = "bold", 
+                                              color = "black"),
+                  legend.text = element_text(size = 16, face = "bold", 
+                                             color = "black"),
                   plot.margin = unit(c(0.5,0.5,0.5,0.5), "cm"))
   
   ## normalized values for the heatmaps

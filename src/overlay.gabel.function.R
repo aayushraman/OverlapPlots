@@ -2,7 +2,6 @@
 overlay.gabels.plot <- function(mat, bin.size = 200, shift.size = 40, 
                                 comp.between1 = "", comp.between2 = "", 
                                 conf_int = 0.50){
-  
   p1 <- overlay.moving.average.function(dat = mat, bin.size, shift.size, 
                                         comp.between1, comp.between2, conf_int)
   return(p1)
@@ -65,9 +64,11 @@ overlay.moving.average.function <- function(dat, bin.size, shift.size,
   sign2 <- sign(mean.points$mat.mean2[idx1:idx2])
   sign.comp <- sum(apply(data.frame(sign1, sign2), 1, function(r)(r[1] == r[2])))
   if(sign.comp < 3){
-    text1 <- "Warning: Directionality issue\nTherefore, inter-change "
-    text2 <- "numerator and denominator for the calculation of logFC of control samples \n"
-    message("\n",text1,text2)
+    text1 <- paste("Warning: Directionality issue \n",
+                   paste("\t Therefore, inter-change numerator and denominator",
+                         "for the calculation of logFC of control samples", 
+                         sep = " "), sep = "")
+    message("\n",text1)
     mean.points$mat.mean1 = -mean.points$mat.mean1
   }
   

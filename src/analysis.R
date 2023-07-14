@@ -175,11 +175,13 @@ if(length(grp.idx$WT.idx1) != length(grp.idx$WT.idx2)){
                 variation!")
     grp.idx <- WTgrp_kmeans_eqSize(control_mat = mat[,1:10])
 }
+
 res1 <- overlap_degs_mCA_wrapper(degs.dat = degs.dat, count.dat = mat,
                                  refseq = mCA1, WT1.idx = grp.idx$WT.idx1, 
                                  WT2.idx = grp.idx$WT.idx2, bin.size = 60, 
                                  shift.size = 6, methyl.type = "mCA/CA")
-p1 <- (res1$plot1 + coord_cartesian(ylim = c(-0.25,0.25))) / res1$plot2 / res1$plot4
+p1 <- ((res1$overlapPlot + coord_cartesian(ylim = c(-0.25,0.25))) / 
+            res1$mCAvGl_plot) | (res1$plotBar / res1$diffPlot)
 rm(wholeCell.KO, degs.dat, mat)
 
 ## mCA analysis for R306C/WT
@@ -198,11 +200,9 @@ res2 <- overlap_degs_mCA_wrapper(degs.dat, count.dat = mat, refseq = mCA1,
                                  WT1.idx = grp.idx$WT.idx1, 
                                  WT2.idx = grp.idx$WT.idx2, bin.size = 40, 
                                  shift.size = 4, methyl.type = "mCA/CA")
-p2 <- (res2$plot1 + coord_cartesian(ylim = c(-0.25,0.25))) / res2$plot2 / res2$plot4
+p2 <- ((res2$overlapPlot + coord_cartesian(ylim = c(-0.25,0.25))) / 
+           res2$mCAvGl_plot) | (res2$plotBar / res2$diffPlot)
 rm(wholeCell.R306C, degs.dat)
-
-
-
 
 
 ## for checking if the results are identical --
